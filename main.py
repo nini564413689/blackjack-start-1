@@ -2,6 +2,7 @@ import random
 cards = [11,2,3,4,5,6,7,8,9,10,10,10,10]
 dealer = []
 player = []
+over_21_value = 22
 
 def dealer_start_card():
     for start_cards in range (2):
@@ -14,11 +15,15 @@ def player_start_cards():
     return player
 
 def pending_A ():
-    for A_value in range (len(player)):
-        if player [A_value] == 11:
-            player [A_value] = 1
-            cards [0] = 1
-            return player
+    over_21 = True
+    while over_21 == True:
+        for A_value in range (len(player)):
+            if player [A_value] == 11 and sum(player)>21:
+                player [A_value] = 1
+                cards [0] = 1
+            else:
+                over_21 = False
+    return player
 
 def player_final_cards():
     stop_dealing = False
@@ -35,7 +40,7 @@ def player_final_cards():
             else:
                 pending_A()
                 if sum(player) > 21:
-                    print (f"you have {player}, {sum(player)} it is over 21, BOOM!!!")
+                    print (f"you have {player}, {sum(player)} it is over 21, BOOM!!!")                   
                     stop_dealing = True
                 else:
                     print (f"you have {player}, your total value is {sum(player)}")
